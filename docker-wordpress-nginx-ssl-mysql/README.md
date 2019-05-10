@@ -1,52 +1,26 @@
-# Docker WordPress, NGINX+SSL, MySQL Database.
+# Docker WordPress NGINX SSL MySQL
 
-## Description
-A quick example of dockerized wordpress setup with an NGINX reverse-proxy frontend doing the SSL termination, and a standard MySQL database backend.
+## Usage
 
-## Pre-requisites
-* docker installed locally
-* docker-compose installed locally
-
-## Setup
-You'll need to do a few things to get this up & running on your local environment.
-
-1. create your certs by going into 'certs/' and running `certs.sh`.
-2. copy the `certs/whateveryoursiteis.cert` and `certs/whateveryoursiteis.key` to 'nginx/ssl/'.
-3. run `docker-compose up` if you want to see all the start-up logs
-4. or `docker-compose up -d` if you want to background.
-
-## Setup Wordpress
-As this was a local setup for me, the server_name of 'www.mywordpress.local' was just an entry in my local /etc/hosts.
+1. copy your certs to `data/nginx/ssl/my_wpress_site.cert` and your private key to `data/nginx/ssl/my_wpress_site.key`.
+2. edit `server_name` in `data/nginx/conf.d/default.conf` with your domain.
+3. execute following command:
 ```
-127.0.0.1 www.mywordpress.local
+    docker-compose up
+```
+4. `plugin` and `theme` folders will be mapped to `data/wordpress/plugins` and `data/wordpress/themes`.
+5. close and remove container with following command:
+```
+    docker-compose down
 ```
 
-* open a browser page to https://www.whateveryoursiteis.com and you should be greeted (if this is the first time running) with an page asking you to install wordpress.
+## Backup
 
-## Key Points
+1. execute`tool/db_export.sh` to dump database to `data/sql/`.
+2. backup plugins and themes under the folder `data/wordpress`.
 
-this 'wordpress'
-```
-proxy_pass http://wordpress;
-```
-refers to the wordpress service in your docker-compose.yml file.
+## Restore
 
-this part in your default.conf:
-```
-        proxy_set_header      Host $host;
-        proxy_set_header      X-Real-IP $remote_addr;
-        proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header      X-Forwarded-Host $server_name;
-        proxy_set_header      X-Forwarded-Proto https;
-
-```
-helps this part in your wp-config.php to work:
-```
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-        $_SERVER['HTTPS'] = 'on';
-}
-```
-this is where we're trying to force HTTPS at all times. The 301 redirect in default.conf for requests to port 80 also helps.
-
-## Footnotes
-obviously get some proper SSL certs for your own site, but this is a good miniature model of how the docker pieces fit together.
+1. copy database dump file to `data/sql/sql_import.sql`.
+2. execute `tool/db_import.sh`
+3. copy installed plugins and themes to `data/wordpress/plugins` and `data/wordpress/themes`.
