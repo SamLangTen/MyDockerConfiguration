@@ -4,11 +4,13 @@
 
 包含PHP-FPM的Nginx Docker模板，适用于单实例多网站模式，即一个Docker容器运行单个Nginx同时承载多个网站。使用过LNMP等工具的用户能较快适应该模式。
 
+本仓库使用PHP 7.4，若需要使用其他版本请自行修改```docker-compose.yaml```。
+
 ### 挂载说明
 
 * ```wwwroot```目录会被挂载为```/home/wwwroot```目录。用于存放网站文件。
 * ```conf/conf.d```目录会被挂载为```/etc/nginx/conf.d```目录。用于存放分离式网站的配置文件，即单个网站有对应的单个配置文件
-* ```conf```目录下其他文件会被挂载到```/etc/nginx```目录下。包含Nginx默认配置和PHP配置。
+* ```conf```目录下其他文件会被挂载到```/etc/nginx```目录下。包含Nginx默认配置、PHP配置和常用建站程序重写配置。
 * 宿主机的```/etc/letsencrypt/live```目录会被挂载到```/etc/letsencrypt/live```。用于存放Let's Encryption签发的证书，可自行更换路径。
 
 ## 使用方法
