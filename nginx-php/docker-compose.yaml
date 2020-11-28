@@ -7,21 +7,21 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "./conf/conf.d:/etc/nginx/conf.d"
+      - "./websites/nginx_conf:/etc/nginx/conf.d"
       - "./conf/rewrite:/etc/nginx/rewrite"
       - "./conf/nginx.conf:/etc/nginx/nginx.conf"
       - "./conf/enable-php.conf:/etc/nginx/enable-php.conf"
       - "./conf/fastcgi.conf:/etc/nginx/fastcgi.conf"
       - "/etc/letsencrypt/live:/etc/letsencrypt/live"
-      - "./wwwroot:/home/wwwroot"
+      - "./websites/wwwroot:/home/wwwroot"
       - "wwwlogs:/home/wwwlogs"
     restart: unless-stopped
     networks:
       - ngnix_with_php_net
   php_driver:
-    build: ./php-fpm-mysqli
+    build: ./build/php-fpm-mysqli
     volumes:
-      - "./wwwroot:/home/wwwroot"
+      - "./websites/wwwroot:/home/wwwroot"
     restart: unless-stopped
     networks:
       - ngnix_with_php_net
