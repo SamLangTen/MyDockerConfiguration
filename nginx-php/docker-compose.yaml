@@ -18,6 +18,8 @@ services:
     restart: unless-stopped
     networks:
       - ngnix_with_php_net
+# If you want to connect to an external MySQL network named mysql_net, uncomment it.      
+#      - mysql_net
   php_driver:
     build: ./build/php-fpm-mysqli
     volumes:
@@ -25,8 +27,15 @@ services:
     restart: unless-stopped
     networks:
       - ngnix_with_php_net
+# If you want to connect to an external MySQL network named mysql_net, uncomment it.      
+#      - mysql_net
 networks:
+# If you want to connect to an external MySQL network named mysql_net, uncomment it.        
+#  mysql_net:
+#    external:
+#      name: mysql_net
   ngnix_with_php_net:
+  
 volumes:
   wwwlogs:
     
