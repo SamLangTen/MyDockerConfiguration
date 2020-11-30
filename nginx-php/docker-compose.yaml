@@ -18,7 +18,7 @@ services:
       - "wwwlogs:/home/wwwlogs"
     restart: unless-stopped
     networks:
-      - ngnix_with_php_net
+      - nginx_with_php_net
 # If you want to connect to an external MySQL network named mysql_net, uncomment it.      
 #      - mysql_net
   php_driver:
@@ -28,7 +28,7 @@ services:
       - "./websites/wwwroot:/home/wwwroot"
     restart: unless-stopped
     networks:
-      - ngnix_with_php_net
+      - nginx_with_php_net
 # If you want to connect to an external MySQL network named mysql_net, uncomment it.      
 #      - mysql_net
 networks:
@@ -36,7 +36,7 @@ networks:
 #  mysql_net:
 #    external:
 #      name: mysql_net
-  ngnix_with_php_net:
+  nginx_with_php_net:
   
 volumes:
   wwwlogs:
