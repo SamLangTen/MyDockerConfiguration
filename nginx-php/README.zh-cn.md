@@ -11,7 +11,7 @@
 * ```websites/wwwroot```目录会被挂载为```/home/wwwroot```目录。用于存放网站文件。
 * ```websites/nginx_conf```目录会被挂载为```/etc/nginx/conf.d```目录。用于存放分离式网站的配置文件，即单个网站有对应的单个配置文件
 * ```conf```目录下其他文件会被挂载到```/etc/nginx```目录下。包含Nginx默认配置、PHP配置和常用建站程序重写配置。
-* 宿主机的```/etc/letsencrypt/live```目录会被挂载到```/etc/letsencrypt/live```。用于存放Let's Encryption签发的证书，可自行更换路径。
+* 宿主机的```/etc/letsencrypt```目录会被挂载到```/etc/letsencrypt```。用于存放Let's Encryption签发的证书，可自行更换路径。
 
 ## 使用方法
 

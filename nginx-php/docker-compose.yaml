@@ -1,8 +1,9 @@
-version: "3.8"
+version: "3.7"
 
 services:
   web_server:
     image: "nginx"
+    container_name: "local-nginx"
     ports:
       - "80:80"
       - "443:443"
@@ -22,6 +23,7 @@ services:
 #      - mysql_net
   php_driver:
     build: ./build/php-fpm-mysqli
+    container_name: "local-phpfpm"
     volumes:
       - "./websites/wwwroot:/home/wwwroot"
     restart: unless-stopped
